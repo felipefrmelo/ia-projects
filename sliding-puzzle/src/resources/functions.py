@@ -25,7 +25,7 @@ def get_start_state():
 		for i in possible_values:
 			output_string += i + ','
 		return output_string[:-1] + ']'
-
+	# Executa processo de Solicitar e receber números
 	flag = True
 	while(flag):
 		valid_values = ['0','1','2','3','4','5','6','7','8']
@@ -61,3 +61,14 @@ def get_empty_space(tuple_state):
 		if(tuple_state[index] == '_'):
 			return index
 	return None
+
+# Imprime A Sequencia Final
+def print_formatted_sequence(array_sequence):
+	array_sequence['state_sequence'].reverse()
+	for state in array_sequence['state_sequence']:
+		if(state['action'] == 'Start'):
+			print('\t',state['action'])
+		else:
+			print('\t', str(state['action'][0]), '=>', str(state['action'][1]))
+		print(state['state'], 'h:', state['heuristica'])
+	print('END', 'level: ' + str(array_sequence['level']), 'cost: ' + str(array_sequence['cost']))
