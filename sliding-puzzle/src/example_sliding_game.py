@@ -3,6 +3,7 @@ from resources.Game import Game
 
 # start_state = f.get_start_state() # GUI para pegar os dados do usuário
 start_state = ('1', '2', '3', '4', '5', '6', '7', '8', '_') # Hard Code temporally : Já é o objetivo
+
 f.print_game(start_state)
 
 print(f.get_empty_space(start_state)) # Retorna o espaço vazio: sera usado na criaçao do primeiro no

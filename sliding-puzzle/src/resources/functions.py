@@ -1,3 +1,5 @@
+# Grupo: Rafael Assis e Felipe Francisco - IA UFU 2018-2
+
 # imprimir jogo: A entrada é uma tupla
 def print_game(state_game):
 	if(len(state_game) != 9):
@@ -70,5 +72,5 @@ def print_formatted_sequence(array_sequence):
 			print('\t',state['action'])
 		else:
 			print('\t', str(state['action'][0]), '=>', str(state['action'][1]))
-		print(state['state'], 'h:', state['heuristica'])
+		print(state['state'], 'h:', state['heuristica'], 'fn:', state['f(n)'])
 	print('END', 'level: ' + str(array_sequence['level']), 'cost: ' + str(array_sequence['cost']))

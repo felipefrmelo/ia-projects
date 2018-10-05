@@ -1,29 +1,14 @@
-# Grupo: Rafael Asis e Felipe - IA UFU 2018-2
-"""
-	Definição de Estado Objetivo:
-	|1|2|3|		|0|1|2|		|_|8|7|
-	|4|5|6|		|3|4|5|		|6|5|4|
-	|7|8|_|		|6|7|8|		|3|2|1|
-	Objetivo    Indices     Exemplo Inicial
+# Grupo: Rafael Assis e Felipe Francisco - IA UFU 2018-2
 
-# Dados Experimentais dados por Márcia
-	+ Media de 22 passo para chegar
-	+ No maximo 26
+# Definição de Estado Objetivo:
 
-# Links que podem ser úteis
-	https://wiki.python.org/moin/TimeComplexity
-	+ Dicionario tem O(1) em media para colocar
+# 	 |1|2|3|		|0|1|2|		 |_|8|7|
+#	 |4|5|6|		|3|4|5|		 |6|5|4|
+#	 |7|8|_|		|6|7|8|		 |3|2|1|
+#	 Objetivo    	Indices     Ex. Inicial
 
-# Lembre-se:
-	+ Se ficar muito lento, alguma etapa terá que ser modificada para ser O(1) ou no máximo O(nlogn)
-		principlamenta na parte das Estruturas de Dados que estiverem usando na execução
-		e em algumas funções internas
-
-"""
 class Game:
 	
-	# empty_symbol = '_'
-
 	# Estado Objetivo
 	goal_state = ('1','2','3','4','5','6','7','8','_') 
 
@@ -33,24 +18,24 @@ class Game:
 		'3': [0,4,6], '4': [1,5,7,3], '5': [2,8,4],
 		'6': [3,7],   '7': [6,4,8],   '8': [5,7]
 	}
-	# Variaveis Uteis para o calculo de H2
+
+	# Variaveis úteis para o calculo de H2
 	mapping_vertical = {
 			'0': 1, '1': 2, '2': 3,
 			'3': 1, '4': 2, '5': 3,
 			'6': 1, '7': 2, '8': 3
-		} #
+	}
 	mapping_horizontal = {
 		'0': 1, '1': 1, '2': 1,
 		'3': 2, '4': 2, '5': 2,
 		'6': 3, '7': 3, '8': 3
 	}
-	# As 'mapping_goal' são dependentes do que for o estado objetivo # Add: gerar para qualquer estado
+	# As 'mapping_goal' são dependentes do que for o estado objetivo ** Add: gerar para qualquer estado
 	mapping_goal_vertical = {
 		'1': 1, '2': 2, '3': 3,
 		'4': 1, '5': 2, '6': 3,
 		'7': 1, '8': 2
 	}
-	#
 	mapping_goal_horizontal = {
 		'1': 1, '2': 1, '3': 1,
 		'4': 2, '5': 2, '6': 2,
@@ -65,34 +50,22 @@ class Game:
 		self.action 	 = action		# tupla (peça escolhida, blanck_space) 
 		self.level		 = level		# Profundidade
 		self.cost		 = cost			# Custo
-		# self.hash_value  = self.generate_hash(state)	# hash para depois verificar nos nos explorados para nao repetir
-		self.heuristica	 = self.heuristica2() + cost	# Implementado em cada caso, criar uma funçâo apra cada caso
+		self.heuristica	 = self.h2() 	# Criar uma funçâo apra cada caso
+		self.fn			 = self.heuristica + cost
 
 	# Testa se chegou ao objetivo
-	# * Etapa pode ser aprimorada caso o programa estiver lento
+	# ** Etapa pode ser aprimorada caso o programa estiver lento
 	def test_goal(self):
-		# print(self.state)
-		# print(Game.goal_state)
 		return self.state == Game.goal_state
 
-	# Serve para retornar um endereço hash a ser colocado num dicionario
-	# Serve para: consultar se um estado já foi explorado
-	# Ai, vamos lve se essa funçâo hash está no dicitonario
-	# Dessa forma, tem O(1) para buscar, colocar e deletar num DICIONARYO
-	##### Será útil para não repetir estados
+	# Ao colocar no dicionário, serve para consulta se esse estado já foi explorado
+	# Return: Identificador do Estado
+	# Vantagem: O(1) para acessar estados explorados
 	def generate_hash(self):
 		hash_key = ''
 		for number in self.state:
 			hash_key += number
 		return hash_key
-
-	# Usado no inicio, para nao presisar buscar a toda hora
-	# retorna o index de onde está a posiçao vazia
-	def search_empty_space(self):
-		for position in self.state:
-			if(postion == 0):
-				return position
-		return None
 
 	# Retorna lista de possiveis indices que podem ir para a posicao vazia
 	# 	Ou seja, retorna as ações possíveis com base no espaço vazio
@@ -111,7 +84,7 @@ class Game:
 	#	Utilizando da forma certa,nâo tem como fazer uma ação impossível
 	def swap_pieces(self, index_choised):
 		state_list = list(self.state)			   # Copia do state atual, pois s´vai mudar dois elementos
-		empty_value = state_list[self.empty_index] # elemento que esta no espaço vazio
+		empty_value = state_list[self.empty_index] # Elemento que esta no espaço vazio
 		# swap
 		state_list[self.empty_index] = state_list[index_choised]
 		state_list[index_choised] = empty_value
@@ -125,7 +98,7 @@ class Game:
 			output += 'Action: ' + self.action
 		else:
 			output += 'Action: ' + str(self.action[0]) + ' => '+ str(self.action[1])
-		output += ' | H: ' + str(self.heuristica)  + ' | Level: ' + str(self.level) + '\n\n'
+		output += ' | f(n): ' + str(self.fn) + ' =  h(n): ' + str(self.heuristica)  + ' + Level: ' + str(self.level) + '\n\n'
 		for i in range(3):
 			output += '\t|' 
 			for j in range(3):
@@ -135,11 +108,8 @@ class Game:
 		return output
 
 	# Comparando para a Lista de Prioridade
-	def __cmp__(self, other_node):
-		return cmp(self.heuristica, other_node.heuristica2)
-
 	def __lt__(self, other):
-	    return self.heuristica < other.heuristica
+	    return self.fn < other.fn
 
 	# Heurística pela Distância de Manhatan
 	# 1. É feita a partir dos dicionários de 'mapping' que são variáveis staticas (compartilhada pelos objetos)
@@ -157,7 +127,7 @@ class Game:
 	# 4. É feito a diferença em módulo, dano a distancia vertical ou horizonal
 	# 5. A soma das distâncias horizonal e vertical dá distância do número, então, basta um s
 	# 		basta um somátoria para todas as posiçôes (execto '_') que temos a heurística H2
-	def heuristica2(self):
+	def h2(self):
 		sum_manhattan = 0
 		for index in ['0','1','2','3','4','5','6','7','8']:
 			if(int(index) == self.empty_index):
@@ -173,17 +143,19 @@ class Game:
 		return sum_manhattan
 
 	# Encapsula e inicializa a lista de retorno de sequencias de ações feito no final
+	# OBS: Retorna os dados da sequência se precisar
 	def sequence_of_actions(self):
 		return self.recursive_return([], self.level, self.cost)
 
 	# retorno recursivo para retornar lista de açoes/estados, level e custo
-	# Eh necessário executar reverse() após a saida para está na ordem
+	# É necessário executar reverse() após a saida para está na ordem
 	def recursive_return(self, array_state_actions, level, cost):
 		array_state_actions.append(
 			{
 				'state' : self.state, 
 				'action': self.action,
-				'heuristica': self.heuristica
+				'heuristica': self.heuristica,
+				'f(n)' : self.fn
 			}
 		)
 		return_data = {'state_sequence': array_state_actions, 'level': level, 'cost': cost}
@@ -192,12 +164,11 @@ class Game:
 		self.origin.recursive_return(array_state_actions, level, cost)
 		return return_data
 
-	# printa jogo, 
+	# Print da seuquência de Estados já invertida: Início ao Fim 
 	def print_game_recursive(self):
 		if(self.origin is None):
 			print(self)
-			return
 		else:
 			self.origin.print_game_recursive()
-			print(self)
-			return
+			print(self) 
+		return
