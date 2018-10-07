@@ -65,7 +65,7 @@ def get_empty_space(tuple_state):
 	return None
 
 # Imprime A Sequencia Final
-def print_formatted_sequence(array_sequence):
+def print_formatted_sequence_total(array_sequence):
 	array_sequence['state_sequence'].reverse()
 	for state in array_sequence['state_sequence']:
 		if(state['action'] == 'Start'):
@@ -74,3 +74,18 @@ def print_formatted_sequence(array_sequence):
 			print('\t', str(state['action'][0]), '=>', str(state['action'][1]))
 		print(state['state'], 'h:', state['heuristica'], 'fn:', state['f(n)'])
 	print('END', 'level: ' + str(array_sequence['level']), 'cost: ' + str(array_sequence['cost']))
+
+# Imprime de forma formatada somente as ações (mais limpo que a verção anterior)
+def print_array_actions(array_sequence):
+	array_sequence['state_sequence'].reverse()
+	count = 0
+	string_output = ''
+	for state in array_sequence['state_sequence']:
+		if(state['action'] == 'Start'):
+			string_output += '\t' + state['action'] 
+		else:
+			string_output += '===> ' + state['action'][0] + ' -> ' + "'" +  state['action'][1] + "' "
+			count += 1
+		if(count % 5 == 0):
+			string_output += '\n\t'
+	print(string_output)
