@@ -13,7 +13,7 @@ def print_game(state_game):
 				output += state_game[j+k] + '|'
 			output += '\n'
 			k += 3
-		print(output)
+		print(output, flush=True)
 
 # GUI para Retornar tuple[9] com os dados digitados
 def get_start_state():

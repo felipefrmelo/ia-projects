@@ -1,12 +1,5 @@
 # Grupo: Rafael Assis e Felipe Francisco - IA UFU 2018-2
 
-# Definição de Estado Objetivo:
-
-# 	 |1|2|3|		|0|1|2|		 |_|8|7|
-#	 |4|5|6|		|3|4|5|		 |6|5|4|
-#	 |7|8|_|		|6|7|8|		 |3|2|1|
-#	 Objetivo    	Indexs      Ex. Inicial
-
 class Game:
 	
 	# Estado Objetivo
@@ -132,23 +125,6 @@ class Game:
 				soma += 1
 		return soma
 
-
-	# Heurística pela Distância de Manhatan
-	# 1. É feita a partir dos dicionários de 'mapping' que são variáveis staticas (compartilhada pelos objetos)
-	# 2. Calculamos a distancia entre onde o número está e onde deveria está de forma na vertical e na horizontal
-	# 3. A soma dessas distâncias (módulo) resulta no valor para o número
-	# 4. Se já estiver no local, a soma dá Zero
-	# Exemplo:
-	#	Inicial		Objetivo
-	#	|5|8|7|		|1|2|3|
-	#	|6|_|4|		|4|5|6|
-	#	|3|2|1|		|7|8|_|
-	# 1. Vai ler a tupla (5,8,7,6,_,4,3,2,1); 
-	# 2. Pelo 1° mapping para vert/horizon vai lê qual o valor dessa posição (1,2,3)
-	# 3. pelo 2° mapping para goal vai lê a posiçâo que deveria está
-	# 4. É feito a diferença em módulo, dano a distancia vertical ou horizonal
-	# 5. A soma das distâncias horizonal e vertical dá distância do número, então, basta um s
-	# 		basta um somátoria para todas as posiçôes (execto '_') que temos a heurística H2
 	def h2(self):
 		sum_manhattan = 0
 		for index in ['0','1','2','3','4','5','6','7','8']:

@@ -8,11 +8,18 @@ import queue as Q
 start_state = f.get_start_state()	
 
 ## HardCode que funciona
-#start_state = ('5', '8', '3', '6', '4', '_', '7', '2', '1') # Funciona
-#start_state = ('7', '2', '4', '5', '_', '6', '8', '3', '1')	 # Funciona
+#start_state = ('5', '8', '3', '6', '4', '_', '7', '2', '1') 	# Funciona
+#start_state = ('7', '2', '4', '5', '_', '6', '8', '3', '1')	# Funciona
+
+#print game
+print('\n\tEstado inicial\n')
+f.print_game(start_state)
 
 h_options = [1,2]
 count_nodes = {1: 0, 2: 0}
+count_states = {1: 0, 2: 0}
+count_nodes_expandeds = {1: 0, 2: 0}
+final_level = {1: 0, 2: 0}
 
 for option in h_options:
 
@@ -36,6 +43,7 @@ for option in h_options:
 			print('\n\tEncontrou Estado Objetivo\n')
 			node.print_game_recursive()
 			f.print_array_actions(node.sequence_of_actions())
+			final_level[option] = node.level
 			#print(f.print_formatted_sequence(node.sequence_of_actions()))
 			break
 		# Executando as ações possíveis
@@ -49,6 +57,13 @@ for option in h_options:
 				# Se não existir esse estado, então insere na fila
 				priority_border.put(son)
 		explorateds_states[node.generate_hash()] = True # Pôe em explorateds_states
+		count_nodes_expandeds[option] += 1
+	# Nos Expandidos
+	count_states[option] = len(explorateds_states)
 
+print('\n\t\tResultado Final')
 for option in h_options:
-	print('Count Nodes para h' + str(option), '==>', count_nodes[option])
+	print('\th' + str(option))
+	print('Porfundidade para h' + str(option), '==>', final_level[option])
+	print('Nos Gerados para h' + str(option), '==>', count_nodes[option])
+	print('Nos Expandidos para h' + str(option), '==>', count_states[option]) ##
