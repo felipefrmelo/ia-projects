@@ -5,11 +5,11 @@ from resources.Game import Game
 import queue as Q
 
 ## Insere estado inicial manualmente
-# start_state = f.get_start_state()	
+start_state = f.get_start_state()	
 
 ## HardCode que funciona
 #start_state = ('5', '8', '3', '6', '4', '_', '7', '2', '1') # Funciona
-start_state = ('7', '2', '4', '5', '_', '6', '8', '3', '1')	 # Funciona
+#start_state = ('7', '2', '4', '5', '_', '6', '8', '3', '1')	 # Funciona
 
 h_options = [1,2]
 count_nodes = {1: 0, 2: 0}
