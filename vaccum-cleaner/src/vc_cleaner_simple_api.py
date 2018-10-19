@@ -1,6 +1,6 @@
 from copy import deepcopy # o copy normal nao vai copiar o  dict'dirty', vai copiar a referencia, por isso dava erro
 
-def vc_cleaner_simple(agent):
+def vc_cleaner_simple_api(agent):
 	opposite = {'A':'B', 'B':'A'} # Auxiliar
 	state_sequence = [] # Array que guarda a sequencia de Ações
 	state_sequence.append({'agent': deepcopy(agent), 'action':'start'}) 

@@ -1,3 +1,5 @@
+# Roda o VaccumClenaer direto nesse aruivo, ou seja, nao usa o server
+
 from copy import deepcopy # o copy normal nao vai copiar o  dict'dirty', vai copiar a referencia, por isso dava erro
 
 # Inserçâo de Dados

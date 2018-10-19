@@ -20,6 +20,7 @@ count_nodes = {1: 0, 2: 0}
 count_states = {1: 0, 2: 0}
 count_nodes_expandeds = {1: 0, 2: 0}
 final_level = {1: 0, 2: 0}
+count_put_queue = {1: 0, 2: 0}
 
 for option in h_options:
 
@@ -56,6 +57,7 @@ for option in h_options:
 			except:
 				# Se não existir esse estado, então insere na fila
 				priority_border.put(son)
+				count_put_queue[option] += 1
 		explorateds_states[node.generate_hash()] = True # Pôe em explorateds_states
 		count_nodes_expandeds[option] += 1
 	# Nos Expandidos
@@ -66,4 +68,6 @@ for option in h_options:
 	print('\th' + str(option))
 	print('Porfundidade para h' + str(option), '==>', final_level[option])
 	print('Nos Gerados para h' + str(option), '==>', count_nodes[option])
-	print('Nos Expandidos para h' + str(option), '==>', count_states[option]) ##
+	print('Nos Expandidos para h' + str(option), '==>', count_states[option]) 
+	print('Nos colocados na Fila para h' + str(option), '==>', count_put_queue[option])
+	print('Nos gerados e nao entraram fila para h' + str(option), '==>', (count_nodes[option] - count_put_queue[option]))

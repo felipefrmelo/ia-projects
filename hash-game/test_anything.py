@@ -50,14 +50,15 @@ count_goal = {
 		'd_up': 0,
 	}
 
-count_goal_list =  [0,0,0,0,0,0,0,0]
-count_goal_tuple = (0,0,0,0,0,0,0,0)
-
-count_goal_tuple = (3,3,3,3,3,3,3,3)
+count_goal_list   = [0,0,0,0,0,0,0,0]
+count_goal_tuple  = (0,0,0,0,0,0,0,0)
+count_goal_tuple  = (3,3,3,3,3,3,3,3)
+count_goal_string = "01234567"
 
 print('\ncount_goal_dict in bytes', sys.getsizeof(count_goal))
 print('\ncount_goal_list in bytes', sys.getsizeof(count_goal_list))
 print('\ncount_goal_tuple in bytes', sys.getsizeof(count_goal_tuple))
+print('\ncount_goal_string in bytes', sys.getsizeof(count_goal_string))
 
 
 # d = {
