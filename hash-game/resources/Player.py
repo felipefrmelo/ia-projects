@@ -72,7 +72,7 @@ def minimax_decision(game):
 		    best_score = v
 		    best_action = a
 	count_nodes['minimax']+=count
-	print('Numero de nos gerados no level',game.level+1,':',count+1,best_score)
+	print('Numero de nos gerados no level',game.level+1,':',count)
 	return best_action
 
 def alfabeta_decision(game):
