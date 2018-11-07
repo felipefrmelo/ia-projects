@@ -1,54 +1,122 @@
-# Grupo: Rafael Assis e Felipe Francisco - IA UFU 2018-2
+import random
 
-class Player:
+def h_player(game):
+    print(game)
+    cont=0
+    
+    for i in range(1,4):
+        for j in range(1,4):
+            if (i,j) in game.acoes():
+                print(cont,end=' ')
+                cont+=1
+            else:
+                print('.',end=' ')      
+        print()
+    escolha=int(input('Escolha o int da posição '))
+    	
+    jogada=game.acoes()[escolha]
+    print(game.move+' ==>',jogada)
+    return jogada
 
-	def __init__(self, name):
-		if(name.lower() == 'max'):
-			self.player = 'MAX'
-			self.symbol = 'X'
-		elif(name.lower() == 'min'):
-			self.player = 'MIN'
-			self.symbol = 'O'
-		else:
-			exit(1)
+def random_player(game):
+	return random.choice(game.acoes()) if game.acoes() else None
+
+def minimax_player(game):
+	return minimax_decision(game)
+
+def alfabeta_player(game):
+    return alfabeta_decision(game)
+# 
 
 
-	def decision_minmax(hashgame):
 
-		# max da lista [] valor-min(Resultado(estado,a))
-		return # array de açoes finais
+infinito = float('inf')
+global count_nodes
+count_nodes = {'minimax':0,'alfabeta':0}
 
-	def MAX(hashgame):
-		if(hasggame.teste)
-			return utiliy
-		v = -999
-		for each action
-			list.append(v, MIN)
-			v = max (v, list)
+
+def minimax_decision(game):
+	
+	global count
+	count = 0
+            
+
+	def max_value(game):
+		global count
+		if game.test_end():
+		    return game.utilidade if game.move =='X' else -game.utilidade
+		v = -infinito
+		for a in game.acoes():
+		    count+=1
+		    v = max(v, min_value(game.resultado(a)))
 		return v
 
-	def MIN(hashgame):
-		if(hasggame.teste)
-			return utiliy
-		v = -999
-		for each action
-			list.append(v, MIN)
-			v = min (v, list)
+	def min_value(game):
+		global count
+		if game.test_end():
+		    return -game.utilidade if game.move =='X' else game.utilidade
+		v = infinito
+		for a in game.acoes():
+		    count+=1
+		    v = min(v, max_value(game.resultado(a)))
 		return v
 
+	best_score = -infinito
+	best_action = None
 
+	for a in game.acoes():
+		count+=1
+		v = min_value(game.resultado(a))
+        
+		if v > best_score:
+		    best_score = v
+		    best_action = a
+	count_nodes['minimax']+=count
+	print('Numero de nos gerados no level',game.level+1,':',count+1,best_score)
+	return best_action
 
-"""
-Esturtura desse Problema
+def alfabeta_decision(game):
+   
+    global count
+    count = 0
+        
+    def max_value(game,alfa, beta):
+        global count
+        if game.test_end():
+            return game.utilidade if game.move =='X' else -game.utilidade
+        v = -infinito
+        for a in game.acoes():
+            count+=1
+            v = max(v, min_value(game.resultado(a), alfa, beta))
+            if v >= beta:
+                return v
+            alfa = max(alfa, v)
+        return v
 
-S0 = Estado inicial, o tabuleiro Vazio (' ')
-JOGAROES() : 2 jogares, Max e Min
-AÇOES(s): Possiveis açoes, vem de list_action do estado
-RESULTADO(s,a): é o eaxecte_action, retorna umnovo estado
-TESTE DE TERMINO(s)) : verifica se terminou ou nao
-UTILIDADE(s,j: Quem ganhou, +1 para Max ou -1 para mIN ou empate????
+    def min_value(game,alfa, beta):
+        global count
+        if game.test_end():
+            return -game.utilidade if game.move =='X' else game.utilidade
+        v = infinito
+        for a in game.acoes():
+            count+=1
+            v = min(v, max_value(game.resultado(a), alfa, beta) )
+            if v <= alfa:
+                return v
+            beta = min(beta, v)
+        return v
+    
 
+    best_score = -infinito
+    beta = infinito
+    best_action = None
+    for a in game.acoes():
+        count+=1
+        v = min_value(game.resultado(a), best_score, beta)
+        if v > best_score:
+            best_score = v
+            best_action = a
+    count_nodes['alfabeta']+=count            
+    print('Numero de nos gerados no level',game.level+1,':',count)
+    return best_action
 
-
-
-"""

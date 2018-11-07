@@ -1,77 +1,37 @@
 from resources.HashGame import HashGame
+from resources.Player import *
+import time
 
-start_state = (' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
-start_count_goal = [0, 0, 0, 0, 0, 0, 0, 0]
 
-# Pode COMENTAR TO O BLOCO ENTRE OS CONJUNTOS DE ####### para escolher só um para executar
-# Como a parte de EMPTARE
+moves=[(1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3), (3, 1), (3, 2), (3, 3)]
 
-#####################################
+node=HashGame({},None,0,moves,0,'X')
 
-print('\n\nINICIO DE PARTIDA')
+for func in [minimax_player,alfabeta_player]:
+    print()
+    print(func.__name__)
+    start = time.time()
+    node.play_game(func)
+    end = time.time()
+    tempo_total=end-start
+    print('Total de nos gerados {0}\nTempo {1:.4} s'.format(count_nodes[func.__name__.split('_')[0]],tempo_total))
 
-start_state = (	'X', 'O', 'X', 
-				'X', 'O', 'O',
-				'O', 'X', 'X')
-start_empty_indexs = "012345678"
 
-start_node = HashGame(start_state, None, 0,
- start_empty_indexs, start_count_goal, False, 'Start')
 
-print(start_node)
-print(start_node.statistics())
 
-next_node = start_node.action(4, 'X')
-print(next_node)
-print(next_node.statistics())
+def jogo():
+    
+    jogadores=[h_player,minimax_player,alfabeta_player,random_player]
+    j=[]
+    str_jg='\n0 : h_player\n1 : minmax_player\n2 : alfabeta_player\n3 : random_player\n' 
+    for i in range(1,3):
+        j.append(int(input('Escolha o jogador '+str(i)+str_jg)))
 
-next2_node = next_node.action(5, 'O')
-print(next2_node)
-print(next2_node.statistics())
+    print('Jogador 1 : ' +jogadores[j[0]].__name__,
+          '\nJogador 2 : '+jogadores[j[1]].__name__,
+          '\n\tStart')
+    node.play_game(jogadores[j[0]],jogadores[j[1]])
 
-#####################################
 
-# print('\n\nEMPATE')
-# start_state_2 = ('X', 'O', 'X', 
-# 				 'X', 'O', 'O', 
-# 				 'O', ' ', 'X')
-# start_empty_indexs_2 = '7'
+    
 
-# # Perceba que o nivel já começa em 8, se nao começar ssim (pu seja, se nao for um csaso real) nao vai detectar endgame
-# start_node_2 = HashGame(start_state_2, None, 8,
-# 	start_empty_indexs_2, start_count_goal, False, 'Start')
-
-# # Calcular count_goal no meio da partida (sera uytil para quando jogar contra a maquina)
-# start_node_2.count_goal = start_node_2.auto_update_count_goal()
-# print(start_node_2, '\n', start_node_2.statistics())
-
-# next_node_2 = start_node_2.action(7,'X')
-# print(next_node_2, '\n', next_node_2.statistics())
-
-# # Empate: O JOGO TERMINOU  MAS UTILIDADE É 0
-# print('Chegou ao Fim?:', next_node_2.test_end())
-# print('Quem ganhou?:', next_node_2.utilidade())
-
-#####################################
-
-print('\n\nVITORIA')
-start_state_3 = ('X', 'O', 'X', 
-				 'X', 'X', 'O', 
-				 'O', 'O', ' ')
-start_empty_indexs_3 = '8'
-
-start_node_3 = HashGame(start_state_3, None, 0,
-	start_empty_indexs_3, start_count_goal, False, 'Start')
-
-start_node_3.count_goal = start_node_3.auto_update_count_goal()
-print(start_node_3, '\n', start_node_3.statistics())
-
-next_node_3 = start_node_3.action(8, 'X')
-print(next_node_3, '\n', next_node_3.statistics())
-
-# Verficando vitoria (1 => Max Ganhou, -1)
-print('Chegou ao Fim?', next_node_3.test_end())
-print('Quem ganhou?:', next_node_3.utilidade())
-
-# printando no final: print de forma recursiva
-next_node_3.print_all_hashgame()
