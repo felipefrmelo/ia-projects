@@ -3,7 +3,7 @@ import copy
 
 class HashGame:
 
-	# Mapea posicao para qual dos goals é o incremento
+	# Mapea posicao de incremento de goal
 	block_state_goal =  {
 		0: [0, 3, 6], 1: [0, 4]      , 2: [0, 5, 7],
 		3: [1, 3]   , 4: [1, 4, 6, 7], 5: [1, 5],
