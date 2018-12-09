@@ -20,4 +20,4 @@ def call_simple_vc():
 	return jsonify(vc_cleaner_simple_api.vc_cleaner_simple_api(agent)) # retorna como JSON
 	
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)

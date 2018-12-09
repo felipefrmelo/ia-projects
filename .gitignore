@@ -1,1 +1,3 @@
 *.pyc
+/Trabalho_final/lib/node_modules
+/Trabalho_final/lib/package-lock.json
