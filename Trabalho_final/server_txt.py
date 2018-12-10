@@ -6,7 +6,7 @@ from json import dumps
 import os, sys
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, dir_path + '/src')
-# import textmining_code
+import textminig_code
 
 # Lidar com Chamada Assincrona
 app = Flask(__name__)
@@ -20,18 +20,8 @@ def hello():
 @app.route('/test2', methods = ['POST'])
 @cross_origin()
 def call_test():
-	# agent = {'position': request.json['startState'],
-	# 		'dirty' : {'A': request.json['dirtyA'], 'B': request.json['dirtyB'] }}
-	# return jsonify(request.json)
-
-	return jsonify({'x': request.json})
-	# return jsonify(textmining_code.test_string(agent)) # retorna como JSON
-
-@app.route('/test2', methods = ['GET'])
-@cross_origin()
-def my_test():
-	return jsonify({'x': 'x', 'y': 'y'})
-
+	comentario = request.json['comentario']
+	return jsonify(textminig_code.classifica(comentario))
 	
 if __name__ == '__main__':
 	app.run(debug=True)

@@ -36,12 +36,13 @@
 	    // Controller
 	    angular.module('textMinig').controller('textMinigController', function($scope, $http, $log) {
 	    	
-	    	$scope.comentario = '';
+	    	$scope.request = {}
+	    	$scope.request.comentario = '';
 
 	    	$scope.action_text_minig = function (form) {
 	    		if (form.$valid) {
-	    			console.log($scope.comentario);
-	    			$http.post("http://localhost:5000/test2", $scope.comentario).then(function (response){
+	    			console.log($scope.request.comentario);
+	    			$http.post("http://localhost:5000/test2", $scope.request).then(function (response){
 	    				console.log(response.data);
 	    			}).catch(function (err){
 						console.log('Catch By error Exception of HTTP');
@@ -55,7 +56,7 @@
 		            formulario.$setPristine();
 		            formulario.$setUntouched();
 		        }
-		        $scope.comentario = '';
+		        $scope.request.comentario = '';
 	    	}
 
 	    });
@@ -85,7 +86,7 @@
             
             <md-input-container class="md-block">
                 <label>Comentário</label>
-                <input md-maxlength="60" required md-no-asterisk name="comentario" ng-model="comentario">
+                <input md-maxlength="60" required md-no-asterisk name="comentario" ng-model="request.comentario">
                 <div ng-messages="form.comentario.$error" ng-class="{'clear': clear}">
                     <div ng-message="required">É necessário preencher esse campo para enviar.</div>
                     <div ng-message="md-maxlength">Tem que ter no máximo 60 caracters</div>
