@@ -9,8 +9,6 @@ from torch.utils.data import TensorDataset, DataLoader
 import torch.nn as nn
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 from string import punctuation
 
 def classifica(test_review):
@@ -168,7 +166,7 @@ def classifica(test_review):
 	        dados['Resposta'] = "Comentario positivo detectado"
 	    else:
 	        #print("Comentario negativo detectado")
-	        dados['Resposta'] = "Comentario positivo detectado"
+	        dados['Resposta'] = "Comentario negativo detectado"
 			
 	    return dados
 	        

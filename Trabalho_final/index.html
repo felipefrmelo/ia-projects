@@ -38,15 +38,26 @@
 	    	
 	    	$scope.request = {}
 	    	$scope.request.comentario = '';
+	    	$scope.loader = false;
+	    	$scope.avaliation = null;
+	    	$scope.error = false;
+	    	$scope.error_message = '';
+	    	$scope.img_src = 'img/';
 
 	    	$scope.action_text_minig = function (form) {
 	    		if (form.$valid) {
-	    			console.log($scope.request.comentario);
+	    			$scope.loader = true;
+	    			$scope.error = false;
 	    			$http.post("http://localhost:5000/test2", $scope.request).then(function (response){
 	    				console.log(response.data);
+	    				$scope.avaliation = response.data;
+	    				$scope.avaliation = handler_output($scope.avaliation);
+	    				$scope.loader = false;
 	    			}).catch(function (err){
-						console.log('Catch By error Exception of HTTP');
-						console.log(err)
+	    				$scope.avaliation = null;
+						$scope.error_message = err;
+						$scope.error = true;
+						$scope.loader = false;
 					});
 	    		}
 	    	};
@@ -57,7 +68,23 @@
 		            formulario.$setUntouched();
 		        }
 		        $scope.request.comentario = '';
+		        $scope.avaliation = null;
+		        $scope.error = false;
+		        $scope.error_message = '';
 	    	}
+
+	    	function handler_output(avaliation){
+	    		if(avaliation.Resposta == "Comentario positivo detectado"){
+	    			avaliation.Status = true;
+	    			avaliation.Inferencia = Math.round(avaliation.Inferencia*100);
+	    			$scope.img_src = 'img/positive.png';
+	    		}else{
+	    			avaliation.Status = false;
+	    			avaliation.Inferencia = Math.round(100 - (avaliation.Inferencia*100));
+	    			$scope.img_src = 'img/negative.png';
+	    		}
+	    		return avaliation;
+	    	};
 
 	    });
 
@@ -98,9 +125,42 @@
                 <md-button ng-click="rest_form(form)">Cancelar</md-button>
             </div>
 
+            <div class="loader" style="text-align: center" ng-show="loader">
+                <md-progress-circular md-mode="indeterminate" ng-show="loader" style="margin: auto"></md-progress-circular>
+                <p>Carregando...</p>
+            </div>
+
         </form>
 
     </md-content>
+
+	<md-card style="padding: 0 50px 0 20px; align-items: center;" ng-show="avaliation != null">
+		<div layout='row'>
+			<div>
+				<md-card-title-text>
+				<span>{{avaliation.Resposta}} com {{avaliation.Inferencia}}%</span>
+				</md-card-title-text>
+			</div>
+			<div>
+				<md-card-title-media height="30" width="30">
+		            <div class="md-media-lg card-media" height="30" width="30">
+		            	<img ng-src="{{img_src}}" height="30" width="30" align='left' style="height: 30px !important; width: 30px !important;">
+		            </div>
+		        </md-card-title-media>
+			</div>
+		</div>
+    	
+    	<!-- <img class="rounded border border-dark" ng-src="{{imgs.A}}" height="100" width="100" align='right' alt="Smiley face"> -->
+    	
+    	
+	</md-card>
+
+	<md-card style="padding: 0 50px 0 20px" ng-show="error">
+    	<span>Deu erro: {{}}</span>
+    	<span>{{avaliation.Resposta}}</span>
+	</md-card>
+
+
 
 </body>
 </html>
