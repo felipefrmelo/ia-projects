@@ -83,6 +83,22 @@
 	    	}
 
 	    	function handler_output(avaliation){
+	    		nota = avaliation.Inferencia;
+	    		if(nota < 0.2){
+	    			avaliation.Nota = 1;
+	    		}else if (nota >= 0.2 && nota < 0.4) {
+	    			avaliation.Nota = 2;
+	    		}
+	    		else if (nota >= 0.4 && nota < 0.6) {
+	    			avaliation.Nota = 3;
+	    		}
+	    		else if (nota >= 0.6 && nota < 0.8) {
+	    			avaliation.Nota = 4;
+	    		}
+	    		else{
+	    			avaliation.Nota = 5;
+	    		}
+
 	    		if(avaliation.Resposta == "Comentario positivo detectado"){
 	    			avaliation.Status = true;
 	    			avaliation.Inferencia = Math.round(avaliation.Inferencia*100);
@@ -151,7 +167,7 @@
 			<div layout='row'>
 				<div>
 					<md-card-title-text>
-					<h2>{{avaliation.Resposta}} com {{avaliation.Inferencia}}%</h2>
+					<h2>{{avaliation.Resposta}} com {{avaliation.Inferencia}}% ({{avaliation.Nota}}</h2>
 					</md-card-title-text>
 				</div>
 				<div>
