@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Dec 10 00:36:39 2018
-
-@author: Feli
-"""
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 import torch.nn as nn
