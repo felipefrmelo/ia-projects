@@ -139,7 +139,7 @@
             
             <md-input-container class="md-block">
                 <label>Comentário</label>
-                <input md-maxlength="60" required md-no-asterisk name="comentario" ng-model="request.comentario">
+                <input md-maxlength="90" required md-no-asterisk name="comentario" ng-model="request.comentario">
                 <div ng-messages="form.comentario.$error" ng-class="{'clear': clear}">
                     <div ng-message="required">É necessário preencher esse campo para enviar.</div>
                     <div ng-message="md-maxlength">Tem que ter no máximo 60 caracters</div>
@@ -167,7 +167,7 @@
 			<div layout='row'>
 				<div>
 					<md-card-title-text>
-					<h2>{{avaliation.Resposta}} com {{avaliation.Inferencia}}% ({{avaliation.Nota}}</h2>
+					<h2>{{avaliation.Resposta}} com {{avaliation.Inferencia}}% ({{avaliation.Nota}}) </h2>
 					</md-card-title-text>
 				</div>
 				<div>
